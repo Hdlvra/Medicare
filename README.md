@@ -19,7 +19,6 @@ Home Page (Accueil):
     - Mots de bienvenue introduisant Medicare.
     - 2 choix :
             | Section "Evènement de la semaine" : Montre au public une activité importante (JPO de Medicare, séminaire, rencontre avec l'administration)
-
             | Section "Bulletin santé de la semaine" : Affiche info iée a la santé publique (nouvelles sur la pandémie du covid, collecte de sang)
 
     - Carrousel d'image des spécialistes de santé.
