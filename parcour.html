@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tout Parcourir</title>
+    <link rel="stylesheet" href="parcour.css" />
+</head>
+
+<body>
+    <header>
+        <h1>Tout Parcourir</h1>
+    </header>
+
+    <div class="carousel-buttons">
+        <button data-carousel-type="generaliste" class="active">Médecin généraliste</button>
+        <button data-carousel-type="specialiste">Médecin spécialisé</button>
+        <button data-carousel-type="laboratoire">Laboratoire de santé</button>
+    </div>
+
+    <div class="carousel-title" id="carouselTitle">Médecin généraliste</div>
+
+    <section class="carousel-section">
+        <div class="carousel-container" data-carousel data-type="generaliste">
+            <div class="carousel-track">
+                <div class="card" onclick="openProfile('Dupont', 'Jean', 'Cardiologue', 'Disponible - Présent')">
+                    <img src="Images/Parcourir/Bruno_Rodrigues.png" alt="Bruno Rodrigues" />
+                    <div class="card-text">Bruno Rodrigues</div>
+                </div>
+                <div class="card" onclick="openProfile('Dupont', 'Jean', 'Cardiologue', 'Disponible - Présent')">
+                    <img src="Images/Parcourir/Humberto_Chavez.png" alt="Bruno Rodrigues" />
+                    <div class="card-text">Bruno Rodrigues</div>
+                </div>
+                <div class="card" onclick="openProfile('Dupont', 'Jean', 'Cardiologue', 'Disponible - Présent')">
+                    <img src="Images/Parcourir/Sofia_Herta.png" alt="Bruno Rodrigues" />
+                    <div class="card-text">Bruno Rodrigues</div>
+                </div>
+                <div class="card" onclick="openProfile('Dupont', 'Jean', 'Cardiologue', 'Disponible - Présent')">
+                    <img src="Images/Parcourir/Usman_Yousaf.png" alt="Bruno Rodrigues" />
+                    <div class="card-text">Bruno Rodrigues</div>
+                </div>
+                <div class="card" onclick="openProfile('Dupont', 'Jean', 'Cardiologue', 'Disponible - Présent')">
+                    <img src="Images/Parcourir/Bruno_Rodrigues.png" alt="Bruno Rodrigues" />
+                    <div class="card-text">Bruno Rodrigues</div>
+                </div>
+                <div class="card" onclick="openProfile('Dupont', 'Jean', 'Cardiologue', 'Disponible - Présent')">
+                    <img src="Images/Parcourir/Bruno_Rodrigues.png" alt="Bruno Rodrigues" />
+                    <div class="card-text">Bruno Rodrigues</div>
+                </div>
+                <div class="card" onclick="openProfile('Dupont', 'Jean', 'Cardiologue', 'Disponible - Présent')">
+                    <img src="Images/Parcourir/Bruno_Rodrigues.png" alt="Bruno Rodrigues" />
+                    <div class="card-text">Bruno Rodrigues</div>
+                </div>
+                <!-- Autres cartes généralistes -->
+            </div>
+        </div>
+
+        <div class="carousel-container hidden" data-carousel data-type="specialiste">
+            <div class="carousel-track">
+                <div class="card" onclick="openProfile('Dupont', 'Jean', 'Cardiologue', 'Disponible - Présent')">
+                    <img src="Images/Parcourir/Bruno_Rodrigues.png" alt="Claire Dubois" />
+                    <div class="card-text">Claire Dubois<br /><span
+                            style="font-family: 'Merriweather';">Spécialité</span></div>
+                </div>
+                <div class="card" onclick="openProfile('Dupont', 'Jean', 'Cardiologue', 'Disponible - Présent')">
+                    <img src="Images/Parcourir/Bruno_Rodrigues.png" alt="Bruno Rodrigues" />
+                    <div class="card-text">Bruno Rodrigues<br /><span
+                            style="font-family: 'Merriweather';">Spécialité</span></div>
+                </div>
+                <div class="card" onclick="openProfile('Dupont', 'Jean', 'Cardiologue', 'Disponible - Présent')">
+                    <img src="Images/Parcourir/Bruno_Rodrigues.png" alt="Bruno Rodrigues" />
+                    <div class="card-text">Bruno Rodrigues<br /><span
+                            style="font-family: 'Merriweather';">Spécialité</span></div>
+                </div>
+                <div class="card" onclick="openProfile('Dupont', 'Jean', 'Cardiologue', 'Disponible - Présent')">
+                    <img src="Images/Parcourir/Humberto_Chavez.png" alt="Bruno Rodrigues" />
+                    <div class="card-text">Bruno Rodrigues<br /><span
+                            style="font-family: 'Merriweather';">Spécialité</span></div>
+                </div>
+                <div class="card" onclick="openProfile('Dupont', 'Jean', 'Cardiologue', 'Disponible - Présent')">
+                    <img src="Images/Parcourir/Sofia_Herta.png" alt="Bruno Rodrigues" />
+                    <div class="card-text">Bruno Rodrigues<br /><span
+                            style="font-family: 'Merriweather';">Spécialité</span></div>
+                </div>
+                <div class="card" onclick="openProfile('Dupont', 'Jean', 'Cardiologue', 'Disponible - Présent')">
+                    <img src="Images/Parcourir/Usman_Yousaf.png" alt="Bruno Rodrigues" />
+                    <div class="card-text">Bruno Rodrigues<br /><span
+                            style="font-family: 'Merriweather';">Spécialité</span></div>
+                </div>
+                <div class="card" onclick="openProfile('Dupont', 'Jean', 'Cardiologue', 'Disponible - Présent')">
+                    <img src="Images/Parcourir/Bruno_Rodrigues.png" alt="Bruno Rodrigues" />
+                    <div class="card-text">Bruno Rodrigues<br /><span
+                            style="font-family: 'Merriweather';">Spécialité</span></div>
+                </div>
+                <div class="card" onclick="openProfile('Dupont', 'Jean', 'Cardiologue', 'Disponible - Présent')">
+                    <img src="Images/Parcourir/Usman_Yousaf.png" alt="Bruno Rodrigues" />
+                    <div class="card-text">Bruno Rodrigues<br /><span
+                            style="font-family: 'Merriweather';">Spécialité</span></div>
+                </div>
+                <!-- Autres cartes spécialistes -->
+            </div>
+        </div>
+
+        <div class="carousel-container hidden" data-carousel data-type="laboratoire">
+            <div class="carousel-track">
+                <div class="card" onclick="openProfile('Dupont', 'Jean', 'Cardiologue', 'Disponible - Présent')">
+                    <img src="Images/Parcourir/Sofia_Herta.png" alt="Laboratoire Alpha" />
+                    <div class="card-text">Laboratoire Alpha</div>
+                </div>
+                <!-- Autres cartes laboratoires -->
+            </div>
+        </div>
+    </section>
+
+
+
+    <div id="popup-overlay" class="hidden"></div>
+
+    <div id="profile-popup" class="hidden">
+        <div class="popup-header">
+            <div class="avatar"></div>
+            <div>
+                <div class="popup-name">Nom Prénom</div>
+                <div class="popup-specialite">Spécialité</div>
+                <div class="popup-dispo">Disponibilité - Absent</div>
+            </div>
+        </div>
+
+        <div class="calendar">
+            <h3>Calendrier</h3>
+            <div class="day-row">
+                <div class="day-label">L</div>
+                <div class="time-bar">
+                    <div class="active-time"></div>
+                </div>
+            </div>
+            <div class="day-row">
+                <div class="day-label">M</div>
+                <div class="time-bar"></div>
+            </div>
+            <div class="day-row">
+                <div class="day-label">M</div>
+                <div class="time-bar"></div>
+            </div>
+            <div class="day-row">
+                <div class="day-label">J</div>
+                <div class="time-bar"></div>
+            </div>
+            <div class="day-row">
+                <div class="day-label">V</div>
+                <div class="time-bar"></div>
+            </div>
+            <div class="day-row">
+                <div class="day-label">S</div>
+                <div class="time-bar"></div>
+            </div>
+        </div>
+
+        <div class="popup-actions">
+            <button class="contact-btn">Contacter</button>
+        </div>
+
+        <div class="contact-options">
+            <span><img src="msg.png" width="16" /> Messages</span>
+            <span><img src="audio.png" width="16" /> Audios</span>
+            <span><img src="video.png" width="16" /> Visioconférence</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
