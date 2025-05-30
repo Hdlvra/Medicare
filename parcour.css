@@ -111,176 +111,126 @@ header {
   to { opacity: 1; }
 }
 
-/* Pop up des cartes */
-/*
-.popup-profile {
+.popup {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
-}
-
-.popup-profile.hidden {
-  display: none;
+  z-index: 9999;
 }
 
 .popup-content {
-  background-color: white;
-  border-radius: 12px;
+  background: white;
   padding: 2rem;
-  max-width: 400px;
-  width: 90%;
-  text-align: center;
+  width: 700px;
+  border-radius: 12px;
+  transform: scale(0.2);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
   position: relative;
-  animation: fadeInPopup 0.3s ease;
 }
 
-.popup-content img {
+.popup.show .popup-content {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.popup-header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.popup-img-container {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 1rem;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
-.close-btn {
+.popup-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.popup-planning {
+  margin-top: 1rem;
+  position: relative;
+  padding-left: 3rem; /* pour décaler les barres et les heures à droite */
+}
+
+.popup-hours {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* de 8h à 20h -> 6 intervalles */
+  margin-left: 40px; /* espace pour les lettres L, M, etc. */
+  font-size: 14px;
+  color: #555;
+}
+
+.popup-days-grid {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+  margin-left: 40px;
+  position: relative;
+}
+
+
+.popup-day {
+  position: relative;
+  height: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.popup-day::before {
+  content: attr(data-day);
+  position: absolute;
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.popup-day span {
+  position: absolute;
+  height: 6px;
+  background-color: #007BFF;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 3px;
+  z-index: 2;
+}
+
+
+.popup-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: end;
+  gap: 1rem;
+}
+
+.popup-actions button {
+  padding: 0.5rem 1rem;
+  background: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.close {
   position: absolute;
   top: 0.5rem;
   right: 1rem;
   font-size: 1.5rem;
   cursor: pointer;
-  color: #333;
-}
-
-@keyframes fadeInPopup {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-
-*/
-
-#popup-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 99;
-}
-
-#profile-popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  border-radius: 20px;
-  padding: 30px;
-  width: 400px;
-  z-index: 100;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  font-family: sans-serif;
-}
-
-#profile-popup .popup-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-#profile-popup .popup-header .avatar {
-  width: 100px;
-  height: 100px;
-  background: lightgray;
-  border-radius: 50%;
-  border: 2px solid deepskyblue;
-  margin-right: 20px;
-}
-
-#profile-popup .popup-name {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-#profile-popup .popup-specialite {
-  color: #80e3f3;
-  margin-top: 5px;
-}
-
-#profile-popup .popup-dispo {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #666;
-}
-
-#profile-popup .calendar {
-  margin-top: 20px;
-}
-
-#profile-popup .calendar h3 {
-  margin-bottom: 10px;
-}
-
-#profile-popup .day-row {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-#profile-popup .day-label {
-  width: 30px;
-  font-weight: bold;
-}
-
-#profile-popup .time-bar {
-  flex-grow: 1;
-  height: 40px;
-  border-radius: 10px;
-  background: lightgray;
-  position: relative;
-}
-
-#profile-popup .time-bar .active-time {
-  position: absolute;
-  top: 0;
-  left: 10%;
-  width: 30%;
-  height: 100%;
-  background: #80e3f3;
-  border-radius: 10px;
-}
-
-#profile-popup .popup-actions {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-#profile-popup .contact-btn {
-  background: #80e3f3;
-  padding: 8px 16px;
-  border-radius: 10px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-#profile-popup .contact-options {
-  display: flex;
-  gap: 20px;
-  margin-top: 10px;
-  justify-content: center;
-}
-
-#profile-popup .contact-options span {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 14px;
 }
