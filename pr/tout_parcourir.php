@@ -20,21 +20,17 @@ $laboratoires = $conn->query("SELECT * FROM laboratoire");
     <link rel="stylesheet" href="style.css" />
     <style>
         
-
+        .nav-links {
+        font-family: 'Poppins', sans-serif;
+    }
         .container {
+            font-family: 'Poppins', sans-serif;
             width: 90%;
             max-width: 1200px;
             margin: auto;
         }
 
-        .btn-login {
-            padding: 0.5rem 1rem;
-            background-color: #000;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+  
 
         h1.section-title {
             text-align: center;
@@ -104,31 +100,36 @@ $laboratoires = $conn->query("SELECT * FROM laboratoire");
 </head>
 <body>
 <header>
-    <div class="container header-container">
-        <h1 class="logo">MEDICARE</h1>
-        <nav class="nav-links">
-            <a href="index.php">Accueil</a>
-            <a href="tout_parcourir.php" class="active">Tout Parcourir</a>
-            <a href="rechercher.php">Recherche</a>
-            <a href="mes_rendezvous.php">Rendez-Vous</a>
+        <div class="container header-container">
+            <h1 class="logo">MEDICARE</h1>
+            <nav class="nav-links">
+                <a href="index.php" >Accueil</a>
+                <a href="tout_parcourir.php" class="active">Tout Parcourir</a>
+                <a href="rechercher.php">Recherche</a>
+                <a href="mes_rendezvous.php">Rendez-Vous</a>
+                <nav>
+                    <?php if (isset($_SESSION['role'])): ?>
+                        <a href="<?php
+                            if ($_SESSION['role'] === 'admin') {
+                                echo 'admin_dashboard.php';
+                            } elseif ($_SESSION['role'] === 'client') {
+                                echo 'client_dashboard.php';
+                            } elseif ($_SESSION['role'] === 'medecin') {
+                                echo 'medecin_dashboard.php';
+                            }
+                        ?>">
+                            <button class="btn-login">Mon profil</button>
+                        </a>
+                        <a href="logout.php"><button class="btn-login">Se déconnecter</button></a>
+                    <?php else: ?>
+                        <a href="client_login.php"><button class="btn-login">Connexion Client</button></a>
+                        <a href="medecin_login.php"><button class="btn-login">Connexion Médecin</button></a>
+                    <?php endif; ?>
+                </nav>
+            </nav>
+        </div>
+    </header>
 
-            <?php if (isset($_SESSION['role'])): ?>
-                <a href="<?php
-                    if ($_SESSION['role'] === 'admin') echo 'admin_dashboard.php';
-                    elseif ($_SESSION['role'] === 'client') echo 'client_dashboard.php';
-                    elseif ($_SESSION['role'] === 'medecin') echo 'medecin_dashboard.php';
-                ?>">
-                    <button class="btn-login">Mon profil</button></a>
-                <a href="logout.php"><button class="btn-login">Se déconnecter</button></a>
-            <?php else: ?>
-                <a href="client_login.php"><button class="btn-login">Connexion Client</button></a>
-                <a href="medecin_login.php"><button class="btn-login">Connexion Médecin</button></a>
-            <?php endif; ?>
-        </nav>
-    </div>
-</header>
-
-<!-- Section Médecins -->
 <h1 class="section-title">Médecins disponibles</h1>
 <div class="medecin-container">
     <?php while ($medecin = $result->fetch_assoc()) { ?>
@@ -164,7 +165,6 @@ $laboratoires = $conn->query("SELECT * FROM laboratoire");
     <?php } ?>
 </div>
 
-<!-- Section Laboratoires -->
 <h1 class="section-title">Laboratoires de biologie médicale</h1>
 <div class="card-container">
     <?php while ($lab = $laboratoires->fetch_assoc()) { ?>

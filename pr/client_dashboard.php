@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Vérifie que l'utilisateur est connecté et est bien un client
+
 if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'client') {
     header("Location: client_login.php");
     exit();
@@ -14,7 +14,6 @@ if ($conn->connect_error) {
 
 $id_client = $_SESSION['id'];
 
-// Récupération des données du client connecté
 $sql = "SELECT * FROM client WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $id_client);

@@ -6,7 +6,6 @@ if ($conn->connect_error) {
     die("Erreur de connexion : " . $conn->connect_error);
 }
 
-// Vérification de la session médecin
 if (!isset($_SESSION['medecin_id']) || $_SESSION['role'] !== 'medecin') {
     header("Location: medecin_login.php");
     exit();
@@ -14,7 +13,6 @@ if (!isset($_SESSION['medecin_id']) || $_SESSION['role'] !== 'medecin') {
 
 $medecin_id = intval($_SESSION['medecin_id']);
 
-// Récupérer les derniers messages par client
 $sql = "
     SELECT c.id AS client_id, c.nom, c.prenom, m.contenu, m.date_envoi
     FROM message m

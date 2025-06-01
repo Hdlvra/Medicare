@@ -6,17 +6,14 @@ if ($conn->connect_error) {
     die("Connexion échouée : " . $conn->connect_error);
 }
 
-// Vérifier que le client est connecté
 if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'client') {
     header("Location: client_login.php");
     exit();
 }
 
-// Récupération des IDs
 $id_client = $_SESSION['id'];
 $id_medecin = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-// Récupérer les jours de disponibilité du médecin
 $dispo_query = $conn->prepare("SELECT DISTINCT jour_semaine FROM disponibilites WHERE id_medecin = ?");
 $dispo_query->bind_param("i", $id_medecin);
 $dispo_query->execute();

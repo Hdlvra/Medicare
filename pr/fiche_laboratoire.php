@@ -20,10 +20,19 @@ if ($res->num_rows !== 1) {
 }
 
 $labo = $res->fetch_assoc();
+
+
+$horaires_res = $conn->prepare("SELECT heure_debut, heure_fin FROM disponibilites_labo WHERE id_laboratoire = ?");
+$horaires_res->bind_param("i", $id);
+$horaires_res->execute();
+$horaires_result = $horaires_res->get_result();
+$horaire = $horaires_result->fetch_assoc();
+
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Fiche Laboratoire - MediCare</title>
@@ -82,6 +91,7 @@ $labo = $res->fetch_assoc();
         }
     </style>
 </head>
+
 <body>
     <div class="fiche-container">
         <h2><?= htmlspecialchars($labo['nom']) ?></h2>
@@ -93,7 +103,11 @@ $labo = $res->fetch_assoc();
         <p><strong>Adresse :</strong> <?= htmlspecialchars($labo['adresse']) ?></p>
         <p><strong>Téléphone :</strong> <?= htmlspecialchars($labo['telephone']) ?></p>
         <p><strong>Email :</strong> <?= htmlspecialchars($labo['email']) ?></p>
-        <p><strong>Horaires :</strong> <?= htmlspecialchars($labo['horaires']) ?></p>
+        <?php if ($horaire): ?>
+            <p><strong>Horaires :</strong> <?= htmlspecialchars(substr($horaire['heure_debut'], 0, 5)) ?> - <?= htmlspecialchars(substr($horaire['heure_fin'], 0, 5)) ?></p>
+        <?php else: ?>
+            <p><strong>Horaires :</strong> Non renseignés</p>
+        <?php endif; ?>
 
         <div style="text-align: center; margin-top: 1.5rem;">
             <a href="contact_labo.php?id=<?= $labo['id'] ?>">
@@ -101,9 +115,15 @@ $labo = $res->fetch_assoc();
                     Contacter ce laboratoire
                 </button>
             </a>
+            <a href="prendre_rdv_labo.php?id=<?= $labo['id'] ?>">
+                <button style="padding: 0.7rem 1.5rem; background-color: #0077cc; color: white; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer;">
+                    Prendre un rendez-vous
+                </button>
+            </a>
         </div>
 
         <a class="btn-retour" href="tout_parcourir.php">← Retour à la liste</a>
     </div>
 </body>
+
 </html>

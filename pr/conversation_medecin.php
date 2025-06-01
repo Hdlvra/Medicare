@@ -6,7 +6,6 @@ if ($conn->connect_error) {
     die("Erreur de connexion : " . $conn->connect_error);
 }
 
-// Vérifier que le médecin est connecté
 if (!isset($_SESSION['medecin_id']) || $_SESSION['role'] !== 'medecin') {
     header("Location: medecin_login.php");
     exit();
@@ -15,7 +14,7 @@ if (!isset($_SESSION['medecin_id']) || $_SESSION['role'] !== 'medecin') {
 $id_medecin = $_SESSION['medecin_id'];
 $id_client = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-// Vérifie que le client existe
+
 $client = $conn->query("SELECT * FROM client WHERE id = $id_client")->fetch_assoc();
 if (!$client) {
     echo "<p style='text-align:center; color:red;'>⚠️ Client introuvable</p>";
@@ -23,14 +22,13 @@ if (!$client) {
     exit();
 }
 
-// Envoi de message
+
 if ($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST['message'])) {
     $contenu = $conn->real_escape_string($_POST['message']);
     $conn->query("INSERT INTO message (id_client, id_medecin, expediteur, contenu) 
                   VALUES ($id_client, $id_medecin, 'medecin', '$contenu')");
 }
 
-// Récupération des messages
 $msgs = $conn->query("SELECT * FROM message 
                       WHERE id_client = $id_client AND id_medecin = $id_medecin 
                       ORDER BY date_envoi ASC");

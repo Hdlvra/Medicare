@@ -6,13 +6,13 @@ if ($conn->connect_error) {
     die("Erreur de connexion : " . $conn->connect_error);
 }
 
-// Vérifier que le client est connecté
+
 if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'client') {
     header("Location: client_login.php");
     exit();
 }
 
-// Récupération des IDs
+
 $id_client = $_SESSION['id'];
 $id_medecin = $_POST['id_medecin'];
 $date = $_POST['date'];

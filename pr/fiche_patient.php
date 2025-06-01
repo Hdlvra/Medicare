@@ -6,13 +6,13 @@ if ($conn->connect_error) {
     die("Connexion échouée : " . $conn->connect_error);
 }
 
-// Vérifier que le médecin est connecté
+
 if (!isset($_SESSION['medecin_id']) || $_SESSION['role'] !== 'medecin') {
     header("Location: medecin_login.php");
     exit();
 }
 
-// Vérifier que l'ID du patient est bien passé
+
 if (!isset($_GET['id'])) {
     echo "Patient non spécifié.";
     exit();

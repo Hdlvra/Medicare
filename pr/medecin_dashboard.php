@@ -5,7 +5,6 @@ if ($conn->connect_error) {
     die("Connexion échouée : " . $conn->connect_error);
 }
 
-// Vérifie si l'utilisateur est connecté comme médecin
 if (!isset($_SESSION['medecin_id']) || $_SESSION['role'] !== 'medecin') {
     header("Location: medecin_login.php");
     exit();

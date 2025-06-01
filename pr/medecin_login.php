@@ -9,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'];
     $mot_de_passe = $_POST['mot_de_passe'];
 
-    // Vérification dans la table client si l'utilisateur est un administrateur
     $stmt_admin = $conn->prepare("SELECT * FROM client WHERE email = ? AND role = 'admin'");
     $stmt_admin->bind_param("s", $email);
     $stmt_admin->execute();
@@ -25,7 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
-    // Sinon, vérifier s'il est médecin
     $stmt = $conn->prepare("SELECT * FROM medecin WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();

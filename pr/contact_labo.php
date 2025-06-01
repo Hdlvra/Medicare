@@ -6,7 +6,7 @@ if ($conn->connect_error) {
     die("Erreur de connexion : " . $conn->connect_error);
 }
 
-// Vérifier que le client est connecté
+
 if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'client') {
     header("Location: client_login.php");
     exit();
@@ -15,21 +15,20 @@ if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'client') {
 $id_client = $_SESSION['id'];
 $id_labo = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-// Vérifier que le laboratoire existe
+
 $labo = $conn->query("SELECT * FROM laboratoire WHERE id = $id_labo")->fetch_assoc();
 if (!$labo) {
     echo "Laboratoire introuvable.";
     exit();
 }
 
-// Envoi de message
 if ($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST['message'])) {
     $contenu = $conn->real_escape_string($_POST['message']);
     $conn->query("INSERT INTO message_labo (id_client, id_laboratoire, expediteur, contenu) 
                   VALUES ($id_client, $id_labo, 'client', '$contenu')");
 }
 
-// Récupération des messages
+
 $msgs = $conn->query("SELECT * FROM message_labo 
                       WHERE id_client = $id_client AND id_laboratoire = $id_labo 
                       ORDER BY date_envoi ASC");

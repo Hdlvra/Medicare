@@ -6,13 +6,11 @@ if ($conn->connect_error) {
     die("Connexion échouée : " . $conn->connect_error);
 }
 
-// Vérification de l'accès admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: index.php");
     exit();
 }
 
-// Récupération des statistiques
 $nb_clients = $conn->query("SELECT COUNT(*) as total FROM client")->fetch_assoc()['total'];
 $nb_medecins = $conn->query("SELECT COUNT(*) as total FROM medecin")->fetch_assoc()['total'];
 ?>

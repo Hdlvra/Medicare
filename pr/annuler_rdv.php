@@ -5,7 +5,7 @@ if ($conn->connect_error) {
     die("Connexion échouée : " . $conn->connect_error);
 }
 
-// Vérifier que le client est connecté
+
 if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'client') {
     http_response_code(403);
     exit();
@@ -25,6 +25,6 @@ if (isset($_GET['id'])) {
 
     $stmt->close();
 } else {
-    http_response_code(400); // Requête invalide
+    http_response_code(400); 
 }
 ?>

@@ -141,17 +141,14 @@ session_start();
         </div>
     </footer>
 <script>
-// variables
 let slide = document.querySelectorAll(".slides");
 let counter = 0;
 const totalLength = slide.length;
 
-// position initiale des images
 slide.forEach((img, index) => {
   img.style.left = `${index * 100}%`;
 });
 
-// fonctions de navigation
 function goBack() {
   counter = (counter - 1 + totalLength) % totalLength;
   updateSlide();
@@ -168,8 +165,7 @@ function updateSlide() {
   });
 }
 
-// défilement automatique
-setInterval(goNext, 5000); // toutes les 1.5 secondes
+setInterval(goNext, 5000); 
 </script>
 
 

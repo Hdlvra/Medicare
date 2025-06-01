@@ -6,31 +6,29 @@ if ($conn->connect_error) {
     die("Erreur de connexion : " . $conn->connect_error);
 }
 
-// Vérifier que le client est connecté
+
 if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'client') {
     header("Location: client_login.php");
     exit();
 }
 
-// Récupération des IDs
+
 $id_client = $_SESSION['id'];
 $id_medecin = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-// Vérifier que le médecin existe
+
 $medecin = $conn->query("SELECT * FROM medecin WHERE id = $id_medecin")->fetch_assoc();
 if (!$medecin) {
     echo "Médecin introuvable.";
     exit();
 }
 
-// Envoi de message
 if ($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST['message'])) {
     $contenu = $conn->real_escape_string($_POST['message']);
     $conn->query("INSERT INTO message (id_client, id_medecin, expediteur, contenu) 
                   VALUES ($id_client, $id_medecin, 'client', '$contenu')");
 }
 
-// Récupération des messages
 $msgs = $conn->query("SELECT * FROM message 
                       WHERE id_client = $id_client AND id_medecin = $id_medecin 
                       ORDER BY date_envoi ASC");

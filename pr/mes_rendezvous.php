@@ -10,7 +10,7 @@ if (!isset($_SESSION['id']) && !isset($_SESSION['medecin_id'])) {
     exit;
 }
 
-$type = $_SESSION['role']; // 'client' ou 'medecin'
+$type = $_SESSION['role']; 
 ?>
 
 <!DOCTYPE html>
@@ -128,8 +128,9 @@ $type = $_SESSION['role']; // 'client' ou 'medecin'
             margin-top: 1rem;
             cursor: pointer;
         }
-        .btn-confirme {
-            background-color:rgb(56, 194, 86);
+
+        .btn-confirmer {
+            background-color: rgb(36, 141, 71);
             color: white;
             border: none;
             padding: 0.4rem 1rem;
@@ -152,37 +153,37 @@ $type = $_SESSION['role']; // 'client' ou 'medecin'
         .btn-retour:hover {
             background-color: #2980b9;
         }
-        
     </style>
 </head>
 
 <body>
-    <header>
+     <header>
         <div class="container header-container">
             <h1 class="logo">MEDICARE</h1>
             <nav class="nav-links">
-                <a href="index.php">Accueil</a>
+                <a href="index.php" >Accueil</a>
                 <a href="tout_parcourir.php">Tout Parcourir</a>
                 <a href="rechercher.php">Recherche</a>
-                <a href="mes_rendezvous.php" class="active">Rendez-Vous</a>
-
-                <?php if (isset($_SESSION['role'])): ?>
-                    <a href="<?php
-                                if ($_SESSION['role'] === 'admin') {
-                                    echo 'admin_dashboard.php';
-                                } elseif ($_SESSION['role'] === 'client') {
-                                    echo 'client_dashboard.php';
-                                } elseif ($_SESSION['role'] === 'medecin') {
-                                    echo 'medecin_dashboard.php';
-                                }
-                                ?>">
-                        <button class="btn-login">Mon profil</button>
-                    </a>
-                    <a href="logout.php"><button class="btn-login">Se déconnecter</button></a>
-                <?php else: ?>
-                    <a href="client_login.php"><button class="btn-login">Connexion Client</button></a>
-                    <a href="medecin_login.php"><button class="btn-login">Connexion Médecin</button></a>
-                <?php endif; ?>
+                <a href="mes_rendezvous.php"class="active">Rendez-Vous</a>
+                <nav>
+                    <?php if (isset($_SESSION['role'])): ?>
+                        <a href="<?php
+                            if ($_SESSION['role'] === 'admin') {
+                                echo 'admin_dashboard.php';
+                            } elseif ($_SESSION['role'] === 'client') {
+                                echo 'client_dashboard.php';
+                            } elseif ($_SESSION['role'] === 'medecin') {
+                                echo 'medecin_dashboard.php';
+                            }
+                        ?>">
+                            <button class="btn-login">Mon profil</button>
+                        </a>
+                        <a href="logout.php"><button class="btn-login">Se déconnecter</button></a>
+                    <?php else: ?>
+                        <a href="client_login.php"><button class="btn-login">Connexion Client</button></a>
+                        <a href="medecin_login.php"><button class="btn-login">Connexion Médecin</button></a>
+                    <?php endif; ?>
+                </nav>
             </nav>
         </div>
     </header>
@@ -206,6 +207,22 @@ $type = $_SESSION['role']; // 'client' ou 'medecin'
         $rdvs = ['confirme' => [], 'en_attente' => []];
         while ($row = $res->fetch_assoc()) {
             $rdvs[$row['statut']][] = $row;
+        }
+
+        $stmt_labo = $conn->prepare("
+        SELECT rl.id, rl.date, rl.heure_debut, l.nom, l.photo
+        FROM rdv_labo rl
+        JOIN laboratoire l ON rl.id_laboratoire = l.id
+        WHERE rl.id_client = ?
+        ORDER BY rl.date, rl.heure_debut
+    ");
+        $stmt_labo->bind_param("i", $id);
+        $stmt_labo->execute();
+        $res_labo = $stmt_labo->get_result();
+
+        $rdvs_labo = [];
+        while ($row = $res_labo->fetch_assoc()) {
+            $rdvs_labo[] = $row;
         }
 
         foreach (['confirme', 'en_attente'] as $statut) : ?>
@@ -246,6 +263,34 @@ $type = $_SESSION['role']; // 'client' ou 'medecin'
             <?php endif; ?>
             </div>
         <?php endforeach; ?>
+        <center>
+        <h2>Rendez-vous en laboratoire</h2>
+                                </center>
+        <div class="rdv-list">
+            <?php if (empty($rdvs_labo)) : ?>
+                <p>Aucun rendez-vous laboratoire.</p>
+            <?php else : ?>
+                <?php foreach ($rdvs_labo as $rdv) : ?>
+                    <a href="fiche_laboratoire.php?id=<?= $rdv['id'] ?>" class="rdv-card">
+
+                        <div class="statut-dot dot-confirme"></div>
+
+                        <!-- Image laboratoire -->
+                        <img src="<?= htmlspecialchars($rdv['photo']) ?>" alt="Image laboratoire" class="medecin-photo">
+
+                        <!-- Infos -->
+                        <div class="rdv-info"><strong><?= htmlspecialchars($rdv['nom']) ?></strong></div>
+                        <div class="rdv-info">Laboratoire</div>
+
+                        <!-- Date/heure -->
+                        <div class="rdv-date">
+                            <?= date("d/m/Y", strtotime($rdv['date'])) ?> à <?= date("H:i", strtotime($rdv['heure_debut'])) ?>
+                        </div>
+
+                    </a>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
     <?php endif; ?>
 
     <?php if ($type == 'medecin') : ?>
@@ -294,10 +339,9 @@ $type = $_SESSION['role']; // 'client' ou 'medecin'
                                 </div>
 
                                 <!-- Bouton annuler (si attente) -->
-                                <!-- Bouton annuler (si attente) -->
                                 <?php if ($statut === 'en_attente') : ?>
                                     <button class="btn-annuler" onclick="annulerRdv(event, <?= $rdv['id'] ?>)">Annuler</button>
-                                    <button class="btn-confirme" onclick="confirmerRdv(event, <?= $rdv['id'] ?>)">Confirmer</button>
+                                    <button class="btn-confirmer" onclick="confirmerRdv(event, <?= $rdv['id'] ?>)">Confirmer</button>
                                 <?php endif; ?>
                             </a>
                         <?php endforeach; ?>
@@ -310,8 +354,8 @@ $type = $_SESSION['role']; // 'client' ou 'medecin'
 
 <script>
     function annulerRdv(event, idRdv) {
-        event.stopPropagation(); // empêche le clic de se propager à la carte
-        event.preventDefault(); // empêche la redirection du lien <a>
+        event.stopPropagation(); 
+        event.preventDefault(); 
 
         if (confirm("Voulez-vous vraiment annuler ce rendez-vous ?")) {
             fetch('annuler_rdv.php?id=' + idRdv, {
@@ -327,11 +371,12 @@ $type = $_SESSION['role']; // 'client' ou 'medecin'
                 });
         }
     }
-    function confirmerRdv(event, idRdv) {
-        event.stopPropagation(); // empêche le clic de se propager à la carte
-        event.preventDefault(); // empêche la redirection du lien <a>
 
-        if (confirm("Voulez-vous vraiment annuler ce rendez-vous ?")) {
+    function confirmerRdv(event, idRdv) {
+        event.stopPropagation(); 
+        event.preventDefault();
+
+        if (confirm("Voulez-vous vraiment confirmer ce rendez-vous ?")) {
             fetch('confirmer_rdv.php?id=' + idRdv, {
                     method: 'GET'
                 })

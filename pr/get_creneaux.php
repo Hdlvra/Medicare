@@ -31,7 +31,6 @@ while ($row = $res->fetch_assoc()) {
     while ($start < $end) {
         $slot = $start->format('H:i');
         
-        // vérifier s'il est déjà pris
         $check = $conn->prepare("SELECT 1 FROM rdv WHERE id_medecin = ? AND date_rdv = ? AND heure_rdv = ? AND statut IN ('en_attente', 'confirme')");
         $check->bind_param("iss", $id_medecin, $date, $slot);
         $check->execute();

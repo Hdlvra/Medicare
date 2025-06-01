@@ -1,5 +1,5 @@
 <?php
-// Connexion à la base de données
+
 $host = 'localhost';
 $db = 'medicare';
 $user = 'root';
@@ -12,7 +12,7 @@ try {
     die("Erreur de connexion : " . $e->getMessage());
 }
 
-// Traitement AJAX
+
 $correspondance = [
     'head' => ['généraliste', 'dermatologie'],
     'torso-upper' => ['cardiologie', 'addictologie','généraliste'],
