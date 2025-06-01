@@ -4,76 +4,6 @@ function erreur($message) {
     echo "<p style='color:red;'>Erreur : $message</p>";
     exit;
 }
-
-$champs = ['nom', 'date_arrivee', 'date_depart', 'adultes', 'enfants', 'chambres', 'hebergement', 'petit_dej', 'fidelite'];
-foreach ($champs as $champ) {
-    if (empty($_POST[$champ])) {
-        erreur("Le champ '$champ' est vide.");
-    }
-}
-
-$nom = $_POST['nom'];
-$date_arrivee = $_POST['date_arrivee'];
-$date_depart = $_POST['date_depart'];
-$adultes = (int)$_POST['adultes'];
-$enfants = (int)$_POST['enfants'];
-$chambres = (int)$_POST['chambres'];
-$hebergement = $_POST['hebergement'];
-$petit_dej = $_POST['petit_dej'];
-$fidelite = $_POST['fidelite'];
-
-if (strtotime($date_depart) <= strtotime($date_arrivee)) {
-    erreur("La date de départ doit être supérieure à la date d'arrivée.");
-}
-
-$nb_jours = (strtotime($date_depart) - strtotime($date_arrivee)) / (60 * 60 * 24);
-
-// Calcul du prix d'hébergement
-$prix_total = 0;
-if ($hebergement === 'economique') {
-    if ($adultes > 0) {
-        $prix_total += 60;
-        $prix_total += ($adultes - 1) * 30;
-    }
-    if ($enfants > 0) {
-        $prix_total += 40;
-        $prix_total += ($enfants - 1) * 20;
-    }
-} else if ($hebergement === 'special') {
-    if ($adultes > 0) {
-        $prix_total += 100;
-        $prix_total += ($adultes - 1) * 75;
-    }
-    if ($enfants > 0) {
-        $prix_total += 80;
-        $prix_total += ($enfants - 1) * 50;
-    }
-}
-
-$prix_total *= $nb_jours;
-
-// Petit déjeuner
-if ($petit_dej === 'avec') {
-    $prix_total += ($adultes * 12.5 + $enfants * 7.5) * $nb_jours;
-}
-
-// Fidélité
-if ($fidelite === 'fidelite') {
-    $prix_total *= 0.975;
-} else if ($fidelite === 'vip') {
-    $prix_total *= 0.92;
-}
-
-echo "<h2>Résumé de la réservation</h2>";
-echo "Nom du client : $nom<br>";
-echo "Date d'arrivée : $date_arrivee<br>";
-echo "Date de départ : $date_depart<br>";
-echo "Nombre de jours : $nb_jours<br>";
-echo "Adultes : $adultes, Enfants : $enfants, Chambres : $chambres<br>";
-echo "Hébergement : $hebergement, Petit déjeuner : $petit_dej<br>";
-echo "Carte fidélité : $fidelite<br>";
-echo "<strong>Prix total à payer : " . number_format($prix_total, 2) . " €</strong>";
-?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -357,7 +287,6 @@ echo "<strong>Prix total à payer : " . number_format($prix_total, 2) . " €</s
     </script>
 </body>
 </html>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -956,6 +885,44 @@ echo "<strong>Prix total à payer : " . number_format($prix_total, 2) . " €</s
                 }
             };
             xhr.send();
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Île-de-France</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2c3e50; text-align: center; }
+        .buttons { display: flex; justify-content: center; gap: 20px; margin: 30px 0; }
+        button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        #content { margin-top: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 5px; min-height: 200px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>L'Île-de-France</h1>
+    <p>Qu'est-ce que l'Île-de-France?</p>
+    <p>Afficher les départements qui forment la région Île-de-France</p>
+    
+    <div class="buttons">
+        <button onclick="loadHTML()">Afficher description</button>
+        <button onclick="loadXML()">Afficher départements</button>
+    </div>
+    
+    <div id="content"></div>
+
+    <script>
+        function loadHTML() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', '1test.html', true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById('content').innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send();
         }
 
         function loadXML() {
@@ -987,8 +954,7 @@ echo "<strong>Prix total à payer : " . number_format($prix_total, 2) . " €</s
         }
     </script>
 </body>
-</html>
-<!DOCTYPE html>
+</html><!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
