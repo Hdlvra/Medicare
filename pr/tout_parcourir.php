@@ -49,12 +49,24 @@ $laboratoires = $conn->query("SELECT * FROM laboratoire");
             gap: 20px;
             padding: 2rem;
         }
-
         .card, .medecin-card {
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.15);
             width: 300px;
+            
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+        .medecin-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            width: 300px;
+            height : 478px;
             padding: 1rem;
             text-align: center;
             transition: transform 0.2s;

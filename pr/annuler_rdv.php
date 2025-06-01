@@ -7,17 +7,24 @@ if ($conn->connect_error) {
 
 // Vérifier que le client est connecté
 if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'client') {
-    header("Location: client_login.php");
+    http_response_code(403);
     exit();
 }
 
-if (isset($_POST['rdv_id'])) {
-    $rdv_id = $_POST['rdv_id'];
+if (isset($_GET['id'])) {
+    $rdv_id = intval($_GET['id']);
     $stmt = $conn->prepare("DELETE FROM rdv WHERE id = ?");
     $stmt->bind_param("i", $rdv_id);
     $stmt->execute();
-}
 
-header('Location: mes_rendezvous.php');
-exit;
+    if ($stmt->affected_rows > 0) {
+        http_response_code(200);
+    } else {
+        http_response_code(400);
+    }
+
+    $stmt->close();
+} else {
+    http_response_code(400); // Requête invalide
+}
 ?>

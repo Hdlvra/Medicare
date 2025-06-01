@@ -313,3 +313,42 @@ footer {
 }
 
  
+.feature-invite {
+  text-align: center;
+  margin-top: 42px;
+  background-color: #bee8ee;
+
+  border-radius: 10px;
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 0 10px rgba(58, 170, 255, 0.2);
+}
+
+.feature-invite h3 {
+  color: #2c7cc0;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.feature-invite p {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 15px;
+}
+
+.btn-feature {
+      height: 64px;
+  width: 60%;
+  background-color: #60b8fc;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-feature:hover {
+  background-color: #2b91e0;
+}

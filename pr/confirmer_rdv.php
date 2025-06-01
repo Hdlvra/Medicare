@@ -11,20 +11,21 @@ if (!isset($_SESSION['medecin_id']) || $_SESSION['role'] !== 'medecin') {
     exit();
 }
 
-if (isset($_POST['rdv_id']) && isset($_POST['action'])) {
-    $rdv_id = $_POST['rdv_id'];
-    $action = $_POST['action'];
+if (isset($_GET['id'])) {
+    $id = intval($_GET['id']);
 
-    if ($action === 'confirmer') {
-        $stmt = $conn->prepare("UPDATE rdv SET statut = 'confirme' WHERE id = ?");
-    } elseif ($action === 'annuler') {
-        $stmt = $conn->prepare("DELETE FROM rdv WHERE id = ?");
+    $stmt = $conn->prepare("UPDATE rdv SET statut = 'confirme' WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+
+    if ($stmt->affected_rows > 0) {
+        http_response_code(200); // OK
+    } else {
+        http_response_code(400); // Erreur
     }
 
-    $stmt->bind_param("i", $rdv_id);
-    $stmt->execute();
+    $stmt->close();
+} else {
+    http_response_code(400); // Requête invalide
 }
-
-header('Location: mes_rendezvous.php');
-exit;
 ?>

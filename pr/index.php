@@ -53,7 +53,17 @@ session_start();
             </div>
             <img src="Images/Docteur_dot_bg_.png" alt="Docteur" />
         </section>
-
+       
+        <center>
+        <div class="feature-invite">
+            <h2>Essayez notre nouvelle fonctionnalité en exclusivité !</h2>
+            <br/>
+            <p>Découvrez quel spécialiste consulter en cliquant directement sur une partie du corps humain.</p>
+            <br/>
+            <a href="exploration_corps.php"><button class="btn-feature">Choisir mon spécialiste</button></a>
+        </div>
+        </center>
+        <br/>
         <section class="pres-carousel">
   <div class="carousel-inner">
     <img src="Images/carou1.jpg" alt="not available" class="slides" />

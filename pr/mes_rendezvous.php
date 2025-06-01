@@ -210,9 +210,11 @@ $type = $_SESSION['role']; // 'client' ou 'medecin'
 
         foreach (['confirme', 'en_attente'] as $statut) : ?>
             <div class="rdv-section">
+                <center>
                 <h2>
                     Rendez-vous <?= $statut === 'confirme' ? 'confirmés' : 'en attente de confirmation' ?>
                 </h2>
+        </center>
                 <div class="rdv-list">
                     <?php if (empty($rdvs[$statut])) : ?>
                         <p>Aucun rendez-vous <?= $statut ?>.</p>
